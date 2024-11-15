@@ -1,0 +1,42 @@
+import pandas as pd
+
+# Crear el DataFrame con los datos proporcionados
+data = {
+    'Nombre': ['Juan', 'Ana', 'Pedro', 'María', 'Luis', 'Carla'],
+    'Edad': [28, None, 40, 45, 38, 34],
+    'Salario': [3000, 4000, 4500, 'cuatro mil', 5000, 4000],
+    'Cargo': ['Analista', 'Gerente', 'Desarrollador', 'Gerente', 'Analista', None],
+    'Fecha Ingreso': ['2021-01-15', '2020/03/12', '2022-07-01', '2021/12/01', None, '2020-03-12']
+}
+
+df = pd.DataFrame(data)
+
+# Identificar valores faltantes
+valores_faltantes = df.isnull().sum()
+print("Valores faltantes por columna:")
+print(valores_faltantes)
+
+# Verificar si la columna Salario tiene valores no numéricos
+def es_numero(valor):
+    try:
+        float(valor)
+        return True
+    except ValueError:
+        return False
+
+# Aplicar la función a la columna Salario
+df['Salario Valido'] = df['Salario'].apply(es_numero)
+print("\nVerificación de Salario (Valido o No):")
+print(df[['Salario', 'Salario Valido']])
+
+
+# Estandarizar el formato de Fecha Ingreso
+df['Fecha Ingreso'] = pd.to_datetime(df['Fecha Ingreso'], errors='coerce').dt.strftime('%Y-%m-%d')
+print("\nFechas Estandarizadas:")
+print(df[['Fecha Ingreso']])
+
+
+# valores faltantes en la columna Cargo
+faltantes_cargo = df['Cargo'].isnull().sum()
+print("\nValores faltantes en 'Cargo':")
+print(faltantes_cargo)
