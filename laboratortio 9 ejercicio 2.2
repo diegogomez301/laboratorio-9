@@ -1,0 +1,16 @@
+import pandas as pd
+
+# Crear el DataFrame con la información de clientes
+data = {
+    'ID Cliente': [1, 2, 3, 2, 4],
+    'Nombre': ['Ana', 'Luis', 'María', 'Luis', 'Carlos']
+}
+
+df = pd.DataFrame(data)
+
+# Verificar si hay duplicados en la columna 'ID Cliente'
+clientes_duplicados = df[df.duplicated('ID Cliente', keep=False)]
+
+# Mostrar los registros duplicados
+print("Clientes con ID duplicado:")
+print(clientes_duplicados)
