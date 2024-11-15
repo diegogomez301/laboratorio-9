@@ -1,0 +1,22 @@
+#instalar primero la libreria cryptografy 
+pip install cryptography
+
+from cryptography.fernet import Fernet
+
+# 1. Crear una cadena con datos sensibles (número de tarjeta)
+numero_tarjeta = "1234-5678-9101-1121"
+
+# 2. Generar una clave para la encriptación
+clave = Fernet.generate_key()
+cifrado = Fernet(clave)
+
+# Encriptar los datos
+numero_tarjeta_encriptado = cifrado.encrypt(numero_tarjeta.encode())
+
+# 3. Desencriptar los datos
+numero_tarjeta_desencriptado = cifrado.decrypt(numero_tarjeta_encriptado).decode()
+
+# Mostrar los resultados
+print(f"Clave utilizada para encriptar: {clave}")
+print(f"Número de tarjeta encriptado: {numero_tarjeta_encriptado}")
+print(f"Número de tarjeta desencriptado: {numero_tarjeta_desencriptado}")
