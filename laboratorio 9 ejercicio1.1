@@ -1,0 +1,37 @@
+import pandas as pd
+
+# Crear el DataFrame con los datos proporcionados
+data = {
+    'Nombre': ['Juan', 'Ana', 'Pedro', 'María', 'Luis', 'Ana'],
+    'Edad': [28, 34, None, 45, 38, 34],
+    'Salario': [3000, 4000, 'cinco mil', 4500, 4000, 5000],
+    'Fecha Ingreso': ['2021-01-15', '2020/03/12', '2022-07-01', '2021/12/01', '2021-05-20', '2020-03-12']
+}
+
+df = pd.DataFrame(data)
+
+# Identificar valores faltantes
+valores_faltantes = df.isnull().sum()
+print("Valores faltantes por columna:")
+print(valores_faltantes)
+
+
+
+# Verificar si la columna Salario tiene valores no numéricos
+def es_numero(valor):
+    try:
+        float(valor)
+        return True
+    except ValueError:
+        return False
+
+# Aplicar la función a la columna Salario
+df['Salario Valido'] = df['Salario'].apply(es_numero)
+print("Verificación de Salario:")
+print(df[['Salario', 'Salario Valido']])
+
+
+# Estandarizar el formato de Fecha Ingreso
+df['Fecha Ingreso'] = pd.to_datetime(df['Fecha Ingreso'], errors='coerce').dt.strftime('%Y-%m-%d')
+print("Fechas Estandarizadas:")
+print(df[['Fecha Ingreso']])
